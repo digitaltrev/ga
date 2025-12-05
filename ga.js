@@ -1,32 +1,36 @@
 (function() {
-  console.log('🔹 Custom Script: Starting initialization...');
+  /**
+   * Google Analytics 4 (GA4) Dynamic Injection Script
+   * This script allows GA4 to be loaded via a single JS file link
+   * bypassing the need for inline HTML <script> tags.
+   */
 
-  // 1. Load the Google Analytics Library
+  // 1. Define the Google Analytics Measurement ID
+  // REPLACE 'G-XXXXXXXXXX' with the specific ID for this account
+  var gaMeasurementId = 'G-XXXXXXXXXX';
+
+  // 2. Load the external Google Analytics library (gtag.js)
   var gaScript = document.createElement('script');
   gaScript.async = true;
-  gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-00DV8Q426J';
+  gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaMeasurementId;
 
-  // Add listeners to see if the file actually downloads
-  gaScript.onload = function() {
-      console.log('✅ Google Analytics: External library loaded successfully.');
-  };
-  gaScript.onerror = function() {
-      console.error('❌ Google Analytics: External library failed to load. (Ad blocker?)');
-  };
-  
-  // 2. Inject it into the page
+  // Insert the script at the top of the <head> to ensure early tracking
   var firstScript = document.getElementsByTagName('script')[0];
-  if (firstScript) {
+  if (firstScript && firstScript.parentNode) {
       firstScript.parentNode.insertBefore(gaScript, firstScript);
   } else {
       document.head.appendChild(gaScript);
   }
 
-  // 3. Configure Google Analytics
+  // 3. Initialize the Global Site Tag (gtag) command queue
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  
+  // Set the JS timestamp
   gtag('js', new Date());
 
-  gtag('config', 'G-00DV8Q426J');
-  console.log('🔹 Custom Script: Config command sent to Google.');
+  // 4. Configure the tracker
+  // "send_page_view: true" is default, but explicit here for clarity
+  gtag('config', gaMeasurementId, { 'send_page_view': true });
+
 })();
