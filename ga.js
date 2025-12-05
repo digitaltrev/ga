@@ -6,8 +6,8 @@
    */
 
   // 1. Define the Google Analytics Measurement ID
-  // REPLACE 'G-XXXXXXXXXX' with the specific ID for this account
-  var gaMeasurementId = 'G-XXXXXXXXXX';
+  // REPLACE 'G-00DV8Q426J' with the specific ID for this account
+  var gaMeasurementId = 'G-00DV8Q426J';
 
   // 2. Load the external Google Analytics library (gtag.js)
   var gaScript = document.createElement('script');
